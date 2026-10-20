@@ -1,4 +1,4 @@
-import { Hero, Hood, Limits, Links, Problem, Proof, Roadmap, How, XraySection } from '../sections';
+import { Hero, Hood, Limits, Links, Problem, Proof, How, XraySection } from '../sections';
 
 export function Landing({ onVideo }: { onVideo: () => void }) {
   return (
@@ -10,8 +10,7 @@ export function Landing({ onVideo }: { onVideo: () => void }) {
       <Proof />
       <Limits />
       <Hood />
-      <Roadmap />
-      <Links onVideo={onVideo} />
+      <Links />
     </>
   );
 }

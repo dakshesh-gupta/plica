@@ -10,7 +10,6 @@ const LINKS: { id: string; label: string }[] = [
   { id: 'proof', label: 'Proof' },
   { id: 'limits', label: 'Limits' },
   { id: 'hood', label: 'Under the hood' },
-  { id: 'roadmap', label: 'Roadmap' },
 ];
 
 export function Nav({ route, onVideo }: { route: Route['path']; onVideo: () => void }) {
@@ -90,7 +89,7 @@ export function Footer({ onVideo }: { onVideo: () => void }) {
           <p>Every AI answer comes with a receipt: what it remembered about you.</p>
           <small>Built for {SITE.hackathon}. Demo mode uses sample data and a stub model.</small>
         </div>
-        <div><h5>Product</h5><button onClick={() => goSection('how')}>How it works</button><button onClick={() => goSection('xray')}>Memory X-ray</button><button onClick={() => goSection('roadmap')}>Roadmap</button></div>
+        <div><h5>Product</h5><button onClick={() => goSection('how')}>How it works</button><button onClick={() => goSection('xray')}>Memory X-ray</button></div>
         <div><h5>Proof</h5><a href="#/verify">Verify a receipt</a><a href="#/demo">Try the demo</a><button onClick={() => goSection('limits')}>Honest limits</button></div>
         <div><h5>Resources</h5><a href={SITE.links.github} target="_blank" rel="noreferrer">GitHub</a><button onClick={onVideo}>Demo video</button><a href={SITE.links.guide} target="_blank" rel="noreferrer">Technical guide</a></div>
       </div>

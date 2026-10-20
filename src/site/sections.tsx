@@ -7,7 +7,7 @@ import { Icon, Logo } from '../panel/icons';
 import { Btn } from '../panel/ui';
 import { DeletionProof, Mosaic, useSeededEngine } from './components';
 import { go } from './router';
-import { SITE, isPlaceholder } from './site.config';
+import { SITE } from './site.config';
 
 const S = ({ children }: { children: React.ReactNode }) => <em className="serif">{children}</em>;
 const Eyebrow = ({ n, children }: { n: string; children: React.ReactNode }) => <div className="eyebrow" data-reveal><span>{n}</span>{children}</div>;
@@ -155,7 +155,6 @@ export function Proof() {
       <div className="proof__band"><Mosaic /><div className="proof__fade" /><div className="wrap proof__head">
         <Eyebrow n="04">Proof</Eyebrow>
         <h2 className="h2" data-reveal>Proof, <S>not promises.</S></h2>
-        <p className="lede lede--c" data-reveal>Run the deletion test and the five automated tests right here. Every check uses real WebCrypto in your browser: SHA-256, ECDSA P-256 and AES-GCM.</p>
       </div></div>
       <div className="wrap">
         <h3 className="h3" data-reveal>Deletion proof: receipts A and B</h3>
@@ -241,19 +240,6 @@ function Node({ x, y, w = 250, h = 62, title, sub, hl }: { x: number; y: number;
   );
 }
 export function Hood() {
-  const stack = [
-    ['Extension', 'Chrome Manifest V3; TypeScript; background service worker, content script, side panel'],
-    ['Chat site', 'One supported site for the demo, read and written through the page DOM'],
-    ['Hashing and signing', 'WebCrypto SHA-256; wallet signatures (SIWE) in the service worker'],
-    ['Blockchain', 'EVM L2 (Base, Optimism or Arbitrum); Solidity; Foundry or Hardhat'],
-    ['Identity', 'did:pkh, did:key, ENS; SpruceID / SIWE'],
-    ['Account abstraction', 'ERC-4337 session keys, so chat has no signature popups'],
-    ['Storage', 'IPFS via Pinata or web3.storage; Arweave for permanence'],
-    ['Encryption and keys', 'Lit Protocol threshold keys; fallback client-side AES-GCM with wallet-derived keys'],
-    ['Delegation', 'UCAN / capability tokens for scoped recall'],
-    ['Memory recall', 'Local retrieval inside the extension; local sensitivity classifier'],
-    ['Side panel UI', 'React; wagmi + RainbowKit; timeline UI for memory'],
-  ];
   return (
     <section className="sec" id="hood">
       <div className="wrap">
@@ -280,98 +266,16 @@ export function Hood() {
             </svg>
           </div>
         </div>
-        <div className="hood__cols">
-          <div data-reveal>
-            <h3 className="h3">Smart contracts</h3>
-            <ul className="kv">
-              <li><b>ProvenanceRegistry</b><span>registerExperiment, attachAttestation, getExperiment</span></li>
-              <li><b>MemoryVault</b><span>updateMemoryRoot, grantScope, revokeScope, tombstone, panicRevoke</span></li>
-              <li><b>PolicyEngine</b><span>optional · retention, TTL, usage caps, GDPR preset</span></li>
-            </ul>
-            <h3 className="h3" style={{ marginTop: 28 }}>Receipt flow</h3>
-            <ol className="flow">
-              <li>Content script captures the prompt, the memory block inserted and the answer.</li>
-              <li>Service worker hashes them, builds the receipt with memory commitments and signs it.</li>
-              <li>Receipt goes to IPFS or Arweave; its CID is registered on-chain.</li>
-              <li>Anyone verifies by recomputing hashes, checking the signature and querying the registry.</li>
-            </ol>
-          </div>
-          <div data-reveal>
-            <h3 className="h3">Tech stack</h3>
-            <ul className="stack">{stack.map(([a, b]) => <li key={a}><b>{a}</b><span>{b}</span></li>)}</ul>
-          </div>
-        </div>
       </div>
     </section>
   );
 }
 
-/* 8 ─ Roadmap ───────────────────────────────────────────── */
-export function Roadmap() {
-  const phases = [
-    { w: 'Hackathon', now: true, items: ['Extension for one chat site', 'Vault, approved recall', 'Receipts with Verify', 'Test panel, optional Coach'] },
-    { w: '0–3 months', items: ['Second and third chat sites', 'MCP server', 'Store-ready permissions review'] },
-    { w: '3–6 months', items: ['Memory Passport: portable memory across sites', 'GDPR erasure reports'] },
-    { w: '6–12 months', items: ['Provider-signed receipts or TEE tier', 'Research Mode as a separate product'] },
-    { w: 'Long term', items: ['Replication staking, zk proofs, data licensing', 'Enterprise compliance suite'] },
-  ];
-  return (
-    <section className="sec" id="roadmap">
-      <div className="wrap">
-        <Eyebrow n="07">Roadmap</Eyebrow>
-        <h2 className="h2" data-reveal>More sites. <S>Stronger proof.</S></h2>
-      </div>
-      <div className="road" data-reveal>
-        <div className="road__track">
-          {phases.map((p) => (
-            <article key={p.w} className={`road__ph${p.now ? ' is-now' : ''}`}>
-              <span className="road__dot" />
-              <h4>{p.w}{p.now && <em>building now</em>}</h4>
-              <ul>{p.items.map((i) => <li key={i}>{i}</li>)}</ul>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* 9 ─ Links ─────────────────────────────────────────────── */
-export function Links({ onVideo }: { onVideo: () => void }) {
-  const L = SITE.links;
-  const linkCard = (icon: 'link' | 'play' | 'receipt' | 'download', title: string, sub: string, href?: string, onClick?: () => void) => {
-    const inner = (<><span className="card__ic"><Icon name={icon} size={18} /></span><div><b>{title}</b><small>{isPlaceholder(href ?? '') && href !== undefined ? 'Add the link in site.config.ts' : sub}</small></div><Icon name="ext" size={14} /></>);
-    return onClick ? <button className="glass lcard" onClick={onClick}>{inner}</button> : <a className="glass lcard" href={href} target="_blank" rel="noreferrer">{inner}</a>;
-  };
+/* 8 ─ Final call to action ─────────────────────────────── */
+export function Links() {
   return (
     <section className="sec" id="links">
       <div className="wrap">
-        <Eyebrow n="08">Links</Eyebrow>
-        <h2 className="h2" data-reveal>Everything to <S>check our work.</S></h2>
-        <div className="lgrid" data-reveal>
-          {linkCard('link', 'GitHub repo', 'Source, build and install instructions', L.github)}
-          {linkCard('play', 'Demo video', 'The 3-minute walkthrough', undefined, onVideo)}
-          {linkCard('receipt', 'Product & technical guide', 'This document', L.guide)}
-          <a className="glass lcard" href="#/verify"><span className="card__ic"><Icon name="shield" size={18} /></span><div><b>Verify a receipt</b><small>Paste, hash-check, signature-check</small></div><Icon name="chev" size={14} /></a>
-          <a className="glass lcard" href="#/demo"><span className="card__ic"><Icon name="play" size={18} /></span><div><b>Try the demo</b><small>Full flow in your browser, no install</small></div><Icon name="chev" size={14} /></a>
-        </div>
-        <div className="duo duo--links">
-          <div className="glass lim" data-reveal>
-            <h3><Icon name="link" size={16} /> Contracts · {SITE.chain.name}</h3>
-            {!SITE.chain.deployed && <p className="lim__note">Not deployed yet. Anchors in this build are <b>simulated</b>, and every receipt says so. Set <code>chain.deployed</code> and the addresses in <code>site.config.ts</code> after deploying.</p>}
-            <ul className="kv">
-              {SITE.chain.contracts.map((c) => (
-                <li key={c.name}><b>{c.name}</b>
-                  {SITE.chain.deployed ? <a href={SITE.chain.explorerAddress + c.address} target="_blank" rel="noreferrer"><code>{c.address.slice(0, 10)}…{c.address.slice(-6)}</code> view on explorer <Icon name="ext" size={11} /></a> : <span>{c.purpose}</span>}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="glass lim" data-reveal>
-            <h3><Icon name="brain" size={16} /> Team</h3>
-            <ul className="team">{SITE.team.map((m, i) => <li key={i}><span className="avatar">{m.name.slice(0, 1)}</span><div><b>{m.name}</b><small>{m.role}</small></div></li>)}</ul>
-          </div>
-        </div>
         <div className="finalcta" data-reveal>
           <Mosaic cell={30} />
           <div className="finalcta__in">
