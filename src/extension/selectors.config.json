@@ -1,0 +1,21 @@
+{
+  "_readme": "THE ONE PLACE to fix when the chat site changes its page. Selector lists are tried in order. Also drives manifest host permissions at build time (npm run build:ext). Verify the site's terms allow user-approved, user-initiated automation before you ship.",
+  "activeSite": "chatgpt",
+  "plicaSiteUrl": "https://YOUR-HACKATHON-SITE.example/",
+  "approvalTimeoutMs": 120000,
+  "sites": {
+    "chatgpt": {
+      "name": "ChatGPT",
+      "matches": ["https://chatgpt.com/*"],
+      "selectors": {
+        "composer": ["#prompt-textarea", "div.ProseMirror[contenteditable='true']", "textarea[data-id='root']"],
+        "sendButton": ["button[data-testid='send-button']", "button[aria-label='Send prompt']", "button[aria-label='Send message']"],
+        "stopButton": ["button[data-testid='stop-button']", "button[aria-label='Stop streaming']"],
+        "assistantMessage": ["[data-message-author-role='assistant']"],
+        "modelLabel": ["[data-testid='model-switcher-dropdown-button']", "button[aria-haspopup='menu'][id*='model']"]
+      },
+      "answerSettleMs": 1500,
+      "maxAnswerWaitMs": 180000
+    }
+  }
+}
